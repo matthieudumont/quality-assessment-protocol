@@ -317,6 +317,11 @@ def qap_anatomical_spatial(anatomical_reorient, qap_head_mask_path,
                            anatomical_csf_mask, subject_id, session_id,
                            scan_id, site_name=None, exclude_zeroes=False,
                            out_vox=True, starter=None):
+
+    print '-------------------------------------------------'
+    print 'YOLO', out_vox
+    print '-------------------------------------------------'
+    #out_vox = False
     """Calculate the anatomical spatial QAP measures for an anatomical scan.
 
     - The exclude_zeroes flag is useful for when a large amount of zero
@@ -381,11 +386,15 @@ def qap_anatomical_spatial(anatomical_reorient, qap_head_mask_path,
     from qap.qap_utils import load_image, load_mask, \
                               create_anatomical_background_mask
 
+    print '-------------------------------------------------'
+    print 'POLLO'
+    print '-------------------------------------------------'
     # Load the data
     anat_data = load_image(anatomical_reorient)
 
     fg_mask = load_mask(qap_head_mask_path, anatomical_reorient)
 
+    print 'pollo'
     # bg_mask is the inversion of the "qap_head_mask"
     bg_mask = create_anatomical_background_mask(anat_data, fg_mask,
         exclude_zeroes)
@@ -407,6 +416,7 @@ def qap_anatomical_spatial(anatomical_reorient, qap_head_mask_path,
     qi1, _ = artifacts(anat_data, fg_mask, bg_mask, calculate_qi2=False)
 
     # Smoothness in voxels
+    print 'pollo'
     tmp = fwhm(anatomical_reorient, whole_head_mask_path, out_vox=out_vox)
     fwhm_x, fwhm_y, fwhm_z, fwhm_out = tmp
 
@@ -457,16 +467,20 @@ def qap_anatomical_spatial(anatomical_reorient, qap_head_mask_path,
             }
     }
 
+    print 'pollo'
     if site_name:
         qc[id_string]['Site'] = str(site_name)
 
+    print 'pollo'
     if exclude_zeroes:
         qc[id_string]['_zeros_excluded'] = "True"
 
+    print 'pollo'
     for key in qc[id_string]["anatomical_spatial"].keys():
         qc[id_string]["anatomical_spatial"][key] = \
             str(qc[id_string]["anatomical_spatial"][key])
 
+    print 'pollo'
     return qc
 
 

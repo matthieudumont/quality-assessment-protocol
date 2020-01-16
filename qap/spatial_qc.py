@@ -332,7 +332,11 @@ def fwhm(anat_file, mask_file, out_vox=False):
 
     # extract output
     vals = np.array(retcode.split(), dtype=np.float)
-    
+
+    # Fix, 3dFWHMx seems to be different from expected
+    if len(vals) > 4:
+        vals = vals[4:]
+    print vals
     if out_vox:
         # get pixel dimensions
         img = nib.load(anat_file)
